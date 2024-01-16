@@ -1,0 +1,39 @@
+import java.sql.*;
+import java.util.*;
+public class PrepareInsert {
+	public static void main()
+	{
+		try
+		{
+			Scanner sc = new Scanner(System.in);
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/advanced_java_21it404","root","");
+			String q = "insert into friends values(?,?,?)";
+			PreparedStatement ps = con.prepareStatement(q);
+			System.out.println("enter name : ");
+			String name = sc.nextLine();
+			ps.setString(2, name);
+			System.out.println("enter city : ");
+			String city = sc.nextLine();
+			ps.setString(3, city);
+			System.out.println("enter salary : ");
+			int salary = sc.nextInt();
+			ps.setInt(4, salary);
+			int a = ps.executeUpdate();
+			if(a > 0)
+			{
+				System.out.println("inserted the data successfully!");
+			}
+			else
+			{
+				System.out.println("failed to insert the data!");
+			}
+			con.close();
+			sc.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("caught an exception!" + e);
+		}
+	}
+}
